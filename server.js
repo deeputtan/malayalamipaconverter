@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 
 // Define the public directory path
-const publicPath = path.join(__dirname,);
+const publicPath = path.join(__dirname,'public');
 
 // Serve the static files from the public directory
 app.use(express.static(publicPath));
