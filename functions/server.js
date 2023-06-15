@@ -6,7 +6,7 @@ const path = require('path');
 const router = express.Router();
 
 // Define the public directory path
-const publicPath = path.join(__dirname,'public');
+const publicPath = path.join(__dirname,'dist');
 
 // Serve the static files from the public directory
 router.use(express.static(publicPath));
