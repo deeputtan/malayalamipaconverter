@@ -1,30 +1,5 @@
-const express = require('express');
-const serverless = require('serverless-http')
-const bodyParser = require('body-parser');
-const app = express();
-const path = require('path');
-const router = express.Router();
-
-// Define the public directory path
-const publicPath = path.join(__dirname,'dist');
-
-// Serve the static files from the public directory
-router.use(express.static(publicPath));
-
-// Parse incoming request bodies
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-
-// Handle the root route
-router.get('/', (req, res) => {
-  res.json;
-});
-
-app.use('/.netlify',router);
-
-// Handle the IPA transcription request
-router.post('/transcribe', (req, res) => {
-  const malayalamText = req.body.text;
+exports.handler = async function(event, context) {
+  const malayalamText = JSON.parse(event.body).text;
 
   // Define a mapping of Malayalam characters to IPA representations
   const mapping = {
@@ -129,7 +104,7 @@ router.post('/transcribe', (req, res) => {
     // Add more mappings as needed
   };
 
-  let ipaTranscription = '';
+   let ipaTranscription = '';
 
   // Iterate over each character in the Malayalam text and convert it to IPA representation
   for (let i = 0; i < malayalamText.length; i++) {
@@ -138,8 +113,9 @@ router.post('/transcribe', (req, res) => {
     ipaTranscription += ipaChar;
   }
 
-  // Send the IPA transcription as the response
-  res.json({ transcription: ipaTranscription });
-});
-
-module.exports.handler = serverless(app)
+  // Return the IPA transcription as the response
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ transcription: ipaTranscription })
+  };
+};

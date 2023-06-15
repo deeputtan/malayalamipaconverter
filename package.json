@@ -1,20 +1,22 @@
 {
-  "name": "ipa-converter",
+  "name": "malayalam-ipa-transcription",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "build": "echo 'No build step required'",
+    "start": "netlify dev",
+    "deploy": "netlify deploy",
+    "deploy:functions": "netlify deploy --only functions"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "express": "^4.18.2",
-    "http": "^0.0.1-security",
-    "netlify-cli": "^15.6.0",
-    "serverless": "^3.32.2"
+  "devDependencies": {
+    "netlify-cli": "^6.7.0"
   },
-  "description": ""
+  "engines": {
+    "node": ">=12"
+  }
 }
+
+
+
+
+
+
