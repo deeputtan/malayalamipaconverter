@@ -1,5 +1,7 @@
 exports.handler = async function(event, context) {
   const malayalamText = JSON.parse(event.body).text;
+  console.log('Malayalam Text:', malayalamText); // Log the malayalamText variable
+
 
   // Define a mapping of Malayalam characters to IPA representations
   const mapping = {
