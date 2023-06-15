@@ -1,3 +1,8 @@
+[build]
+  command = "npm run build" # Specify the build command if needed
+  functions = "functions" # Specify the directory where your functions are located
+  publish = "public" # Specify the directory containing your static files
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
