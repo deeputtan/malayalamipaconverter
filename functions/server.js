@@ -17,7 +17,7 @@ router.use(bodyParser.json());
 
 // Handle the root route
 router.get('/', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
+  res.json;
 });
 
 app.use('/.netlify',router);
