@@ -1,25 +1,29 @@
 const express = require('express');
+const serverless = require('serverless-http')
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
+const router = express.Router();
 
 // Define the public directory path
 const publicPath = path.join(__dirname,'public');
 
 // Serve the static files from the public directory
-app.use(express.static(publicPath));
+router.use(express.static(publicPath));
 
 // Parse incoming request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 // Handle the root route
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
 });
 
+app.use('/.netlify',router);
+
 // Handle the IPA transcription request
-app.post('/transcribe', (req, res) => {
+router.post('/transcribe', (req, res) => {
   const malayalamText = req.body.text;
 
   // Define a mapping of Malayalam characters to IPA representations
@@ -138,7 +142,4 @@ app.post('/transcribe', (req, res) => {
   res.json({ transcription: ipaTranscription });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+module.exports.handler = serverless(app)
