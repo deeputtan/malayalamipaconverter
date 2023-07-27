@@ -109,7 +109,14 @@ app.post('/transcribe', (req, res) => {
       'ഐ': 'ai',
       'ഔ': 'au',
       'ം' :'am',
-      '്': '∂'
+      '്': '∂',
+      'ൺ': 'n̪',
+      'ൻ':'n̪',
+      'ർ':'r',
+      'ൽ':'l',
+      'ൾ':'ɭ'
+
+
 
 
     
@@ -124,34 +131,42 @@ app.post('/transcribe', (req, res) => {
 
   const words = malayalamText.split(' '); // Split the input text into words
 
-  // Iterate over each word in the Malayalam text and convert it to IPA representation
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
+ // Iterate over each word in the Malayalam text and convert it to IPA representation
+for (let i = 0; i < words.length; i++) {
+  const word = words[i];
 
-    let ipaWord = '';
+  let ipaWord = '';
 
-    // Iterate over each character in the word and convert it to IPA representation
-    for (let j = 0; j < word.length; j++) {
-      const char = word[j];
-      const ipaChar = mapping[char] || char; // If no mapping found, use the original character
+  // Iterate over each character in the word and convert it to IPA representation
+  for (let j = 0; j < word.length; j++) {
+    const char = word[j];
+    const ipaChar = mapping[char] || char; // If no mapping found, use the original character
 
-      // Check if '്' appears between letters within a word
-      if (char === '്' && j > 0 && j < word.length - 1) {
-        // Skip adding '്' character within the word
-        continue;
-      }
-
-      ipaWord += ipaChar;
+    // Check if '്' appears between letters within a word
+    if (char === '്' && j > 0 && j < word.length - 1) {
+      // Skip adding '്' character within the word
+      continue;
     }
 
-    ipaTranscription += ipaWord;
-
-    // Add a space between words
-    if (i < words.length - 1) {
-      ipaTranscription += ' ';
-    }
+    ipaWord += ipaChar;
   }
 
+  // Add 'a' if the word ends with a consonant
+  const lastChar = word[word.length - 1];
+  const isConsonant = !(/[ാിീുൂൃെേൊോൗൌം്]/.test(lastChar)); // Check if lastChar is not a vowel
+
+  if (isConsonant) {
+    ipaWord += 'a';
+  }
+
+  ipaTranscription += ipaWord;
+
+  // Add a space between words
+  if (i < words.length - 1) {
+    ipaTranscription += ' ';
+  }
+}
+  
   
   
 
